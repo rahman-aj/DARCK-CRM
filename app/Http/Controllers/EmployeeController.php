@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Employee;
 use Illuminate\Http\Request;
+use App\Http\Requests\StoreEmployeeRequest;
 
 class EmployeeController extends Controller
 {
@@ -24,7 +25,7 @@ class EmployeeController extends Controller
      */
     public function create()
     {
-        //
+        return view('contacts.create');
     }
 
     /**
@@ -33,9 +34,17 @@ class EmployeeController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store(StoreEmployeeRequest $request)
     {
-        //
+        $employee = new Employee([
+            'first_name' => $request->get('first_name'),
+            'last_name' => $request->get('last_name'),
+            'department' => $request->get('depratment'),
+            'email' => $request->get('email'),
+            'phone_number' => $request->get('phone_number')
+        ]);
+        $employee->save();
+        return redirect('/employees')->with('success', 'employee saved!');
     }
 
     /**
