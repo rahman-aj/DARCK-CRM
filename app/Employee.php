@@ -14,4 +14,12 @@ class Employee extends Model
     protected $fillable = [
         'fist_name', 'last_name', 'email', 'phone',
     ];
+
+    /**
+     * Get the department that owns the comment.
+     */
+    public function department()
+    {
+        return $this->belongsTo('App\Department');
+    }
 }
