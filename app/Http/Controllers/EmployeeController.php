@@ -6,6 +6,8 @@ use App\Department;
 use App\Employee;
 use Illuminate\Http\Request;
 use App\Http\Requests\StoreEmployeeRequest;
+use Illuminate\Support\Facades\DB;
+
 
 class EmployeeController extends Controller
 {
@@ -16,7 +18,7 @@ class EmployeeController extends Controller
      */
     public function index()
     {
-        $employees = Employee::all();
+        $employees = DB::table('employees')->paginate(10);
 
         return view('employees.index', compact('employees'));
     }

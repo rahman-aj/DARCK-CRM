@@ -34,8 +34,7 @@
                 @endforeach
             </tbody>
         </table>
-        <div>
-        </div>
+
         @endsection
 
         <div class="col-sm-12">
