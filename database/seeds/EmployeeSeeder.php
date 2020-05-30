@@ -16,7 +16,7 @@ class EmployeeSeeder extends Seeder
         DB::table('employees')->insert([
             'first_name' => Str::random(5),
             'last_name' => Str::random(5),
-            'department_id' => 1,
+            'department_id' => 3,
             'email' => Str::random(10).'@test.com',
             'phone' => Str::random(10)
         ]);
