@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Department;
 use App\Employee;
 use Illuminate\Http\Request;
 use App\Http\Requests\StoreEmployeeRequest;
@@ -15,7 +16,9 @@ class EmployeeController extends Controller
      */
     public function index()
     {
-        //
+        $employees = Employee::all();
+
+        return view('employees.index', compact('employees'));
     }
 
     /**
@@ -25,7 +28,8 @@ class EmployeeController extends Controller
      */
     public function create()
     {
-        return view('employees.create');
+        $departments = Department::all();
+        return view('employees.create',compact('departments'));
     }
 
     /**
@@ -39,9 +43,9 @@ class EmployeeController extends Controller
         $employee = new Employee([
             'first_name' => $request->get('first_name'),
             'last_name' => $request->get('last_name'),
-            'department' => $request->get('depratment'),
+            'department_id' => $request->get('department_id'),
             'email' => $request->get('email'),
-            'phone_number' => $request->get('phone_number')
+            'phone' => $request->get('phone')
         ]);
         $employee->save();
         return redirect('/employees')->with('success', 'employee saved!');
@@ -50,8 +54,7 @@ class EmployeeController extends Controller
     /**
      * Display the specified resource.
      *
-     * @param  \App\Employee  $employee
-     * @return \Illuminate\Http\Response
+     * @param  \App\Employee  $employee * @return \Illuminate\Http\Response
      */
     public function show(Employee $employee)
     {
@@ -64,9 +67,10 @@ class EmployeeController extends Controller
      * @param  \App\Employee  $employee
      * @return \Illuminate\Http\Response
      */
-    public function edit(Employee $employee)
+    public function edit($id)
     {
-        //
+        $employee = Employee::find($id);
+        return view('employees.edit', compact('employee'));  
     }
 
     /**
@@ -76,9 +80,18 @@ class EmployeeController extends Controller
      * @param  \App\Employee  $employee
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, Employee $employee)
+    public function update(StoreEmployeeRequest $request, $id)
     {
-        //
+        $employee = Employee::find($id);
+        $employee->first_name =  $request->get('first_name');
+        $employee->last_name =  $request->get('last_name');
+        $employee->department =  $request->get('department_id');
+        $employee->email = $request->get('email');
+        $employee->phone = $request->get('phone');
+
+        $employee->save();
+
+        return redirect('/employees')->with('success', 'Employee updated!');
     }
 
     /**
@@ -87,8 +100,11 @@ class EmployeeController extends Controller
      * @param  \App\Employee  $employee
      * @return \Illuminate\Http\Response
      */
-    public function destroy(Employee $employee)
+    public function destroy($id)
     {
-        //
+        $employee = Employee::find($id);
+        $employee->delete();
+
+        return redirect('/employees')->with('success', 'Employee deleted!');
     }
 }
