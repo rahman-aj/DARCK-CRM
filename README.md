@@ -47,6 +47,8 @@ php artisan db:seed --class=TheNameOfTheSeeder
 localhost/department ( Shows all department )
 localhost/employees ( Shows all employees )
 
+localhost/department/create ( Goes to create department page )
+localhost/employees/create ( Goes to create employees page )
 
 * To start the project run:
 
